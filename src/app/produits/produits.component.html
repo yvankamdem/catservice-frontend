@@ -2,9 +2,16 @@
   <div class="panel panel-primary">
     <div class="panel-heading">Liste de produits</div>
     <div class="panel-body">
-      <button class="btn btn-primary" (click)="onGetProducts()">Produits</button>
+      <button  class="btn btn-primary " (click)="onGetProducts()">Produits</button>
     </div>
     <div class="panel-body">
+      <form #f="ngForm" (ngSubmit)="onChercher(f.value)">
+        <div class="form-group">
+          <label>Keyword</label>
+          <input type="text" name="keyword" ngModel>
+          <button type="submit" class="btn btn-primary">Chercher</button>
+        </div>
+      </form>
       <table *ngIf="produits" class="table table-striped">
         <tr>
           <th>ID</th><th>DESIGNATION</th><th>PRIX</th><th>QUANTITE</th>
@@ -14,11 +21,9 @@
           <td>{{p.designation}}</td>
           <td>{{p.price|number:'0.2'}}</td>
           <td>{{p.quantite}}</td>
+          <td><a class="btn btn-primary delete" (click)="onDeleteProduct(p)">Delete</a></td>
         </tr>
       </table>
-      <ul>
-        <li *ngFor=""></li>
-      </ul>
     </div>
   </div>
 </div>

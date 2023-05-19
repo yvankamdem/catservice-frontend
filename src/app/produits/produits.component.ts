@@ -9,9 +9,8 @@ import {CatalogueService} from "../services/catalogue.service";
 export class ProduitsComponent implements OnInit{
 
   public produits:any;
-  public size:number=5;
+  public size:number=9;
   public currentPage:number=0;
-  public totalPages:number=8;
   constructor(private catService:CatalogueService) {}
   ngOnInit(){
   }
@@ -19,9 +18,28 @@ export class ProduitsComponent implements OnInit{
   onGetProducts() {
     this.catService.getProducts(this.currentPage,this.size)
       .subscribe(data => {
-          this.produits = data;
-        },
-        err => {
+        this.produits = data;
+      }, err => {
+        console.log(err);
+      });
+  }
+
+  onChercher(form: any) {
+    this.catService.getProductsByKeyword(form.keyword,this.currentPage,this.size)
+      .subscribe(data => {
+        this.produits = data;
+      }, err => {
+        console.log(err);
+      });
+  }
+
+  onDeleteProduct(p:any) {
+    let conf=confirm("Etes vous sûre?");
+    if(conf)
+      this.catService.deleteResource(p._links.self.href)
+        .subscribe(data =>{
+          this.onGetProducts();
+        },err=>{
           console.log(err);
         })
   }
