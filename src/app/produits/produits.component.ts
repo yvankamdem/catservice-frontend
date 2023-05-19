@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CatalogueService} from "../services/catalogue.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-produits',
@@ -11,7 +12,7 @@ export class ProduitsComponent implements OnInit{
   public produits:any;
   public size:number=9;
   public currentPage:number=0;
-  constructor(private catService:CatalogueService) {}
+  constructor(private catService:CatalogueService, private router:Router) {}
   ngOnInit(){
   }
 
@@ -42,5 +43,10 @@ export class ProduitsComponent implements OnInit{
         },err=>{
           console.log(err);
         })
+  }
+
+  onEditProduct(p:any) {
+    let url=p._links.self.href;
+    this.router.navigateByUrl("/edit-product/"+btoa(url));
   }
 }

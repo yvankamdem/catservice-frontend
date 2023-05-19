@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {Product} from "../model/product.model";
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +20,12 @@ export class CatalogueService {
   }
   public deleteResource(url:any){
     return this.httpClient.delete(url);
+  }
+  public saveResource(url:any,data:any){
+    return this.httpClient.post(url,data);
+  }
+
+  public getResource(url:any){
+    return this.httpClient.get(url);
   }
 }
