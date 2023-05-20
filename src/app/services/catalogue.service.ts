@@ -28,4 +28,7 @@ export class CatalogueService {
   public getResource(url:any){
     return this.httpClient.get(url);
   }
+  public updateResource(url:any,data:any){
+    return this.httpClient.put(url,data);
+  }
 }

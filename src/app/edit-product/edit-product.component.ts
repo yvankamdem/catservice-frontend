@@ -12,12 +12,13 @@ export class EditProductComponent implements OnInit{
   public currentProduct: Product =new Product();
   private data: number=0;
   private mode: number=1;
+  private url: string='';
   constructor(private router:Router, private activatedRoute:ActivatedRoute,private catService:CatalogueService){
     this.currentProduct = new Product();
   }
   ngOnInit(): void {
-    let url=atob(this.activatedRoute.snapshot.params['id'])
-    this.catService.getResource(url)
+    this.url=atob(this.activatedRoute.snapshot.params['id'])
+    this.catService.getResource(this.url)
       .subscribe(data=>{
         if (data instanceof Product) {
           this.currentProduct=data;
@@ -28,7 +29,7 @@ export class EditProductComponent implements OnInit{
   }
 
   onEditProduct(value: any) {
-    
+
   }
 
   onSaveProduct(value: any) {
@@ -42,6 +43,16 @@ export class EditProductComponent implements OnInit{
       },err=>{
         console.log(err);
       })
-    
+
+  }
+
+  onUpdateProduct(value: any) {
+    this.catService.updateResource(this.url,value)
+      .subscribe(data=>{
+        alert("Mise à jour effectuée avec succès");
+        this.router.navigateByUrl("/products")
+      },err=>{
+        console.log(err);
+      })
   }
 }
